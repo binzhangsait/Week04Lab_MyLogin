@@ -21,7 +21,7 @@ public class HomeServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        counter = 0;
+        counter = 0; 
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)

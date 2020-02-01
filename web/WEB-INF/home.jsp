@@ -15,7 +15,7 @@
         <h1>Home Page</h1>
 
         <br>
-        
+        <h2>Hello ${username}.</h2>
         
         <hr>
 
