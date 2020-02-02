@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -16,12 +17,11 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class HomeServlet extends HttpServlet {
 
-    
     private int counter;
 
     @Override
     public void init() throws ServletException {
-        counter = 0; 
+        counter = 0;
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -35,6 +35,18 @@ public class HomeServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setAttribute("guestcount", "<p> you are visitor #" + counter + "!</p>");
         counter++;
+        System.out.println("GET in home");
+        HttpSession hs = request.getSession();
+        User u = (User) hs.getAttribute("user");
+        if (u != null) {
+            System.out.println("username ======> " + u.getUsername());
+            request.setAttribute("username", u.getUsername());
+            request.getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
+        } else {
+            System.out.println("no user found");
+            response.sendRedirect("/Week04Lab_MyLogin/login");
+        }
+
     }
 
     @Override
@@ -43,6 +55,8 @@ public class HomeServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setAttribute("guestcount", "<p> you are visitor #" + counter + "!</p>");
         counter++;
+        System.out.println("POST in home");
+        request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
     }
 
     @Override

@@ -11,7 +11,7 @@
 public class AccountService {
 
     public User login(String username, String password) {
-        if ((username.equals("adam") || username.equals("betty")) && password.equals("1")) {
+        if ((username.equals("adam") || username.equals("betty")) && password.equals("password")) {
             User u = new User();
             u.setUsername(username);
             u.setPassword(null);

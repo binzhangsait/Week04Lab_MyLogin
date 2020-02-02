@@ -17,8 +17,8 @@
         <br>
         <h2>Hello ${username}.</h2>
         
+        <a href="/Week04Lab_MyLogin/login?${username}">Log out</a>
         <hr>
-
         ${guestcount}
     </body>
 </html>

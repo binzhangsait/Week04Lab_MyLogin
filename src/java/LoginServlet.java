@@ -37,9 +37,9 @@ public class LoginServlet extends HttpServlet {
         request.setAttribute("guestcount", "<p> you are visitor #" + counter + "!</p>");
         counter++;
         System.out.println("GET in login.jsp");
-        
-        String logout = request.getParameter("logout");
-        if (logout == null) {
+
+        String submit = request.getParameter("submit");
+        if (submit == null) {
             System.out.println("logout ====== null");
             request.getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
         } else {
@@ -47,6 +47,7 @@ public class LoginServlet extends HttpServlet {
             User u = (User) hs.getAttribute("user");
             String username = u.getUsername();
             request.setAttribute("username", username);
+            hs.removeAttribute("user");
             request.getServletContext().getRequestDispatcher("login").forward(request, response);
         }
 
@@ -59,6 +60,22 @@ public class LoginServlet extends HttpServlet {
         request.setAttribute("guestcount", "<p> you are visitor #" + counter + "!</p>");
         counter++;
         System.out.println("POST in login.jsp");
+
+        String username = request.getParameter("user");
+        String password = request.getParameter("password");
+        AccountService as = new AccountService();
+        User login = as.login(username, password);
+        if (login != null) {
+            User u = new User();
+            u.setUsername(username);
+            u.setPassword(password);
+            HttpSession hs = request.getSession();
+            hs.setAttribute("user", u);
+            response.sendRedirect("/Week04Lab_MyLogin/home");
+        }else{
+            request.setAttribute("error", "Invalid user or password");
+            request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+        }
 
     }
 

@@ -19,6 +19,9 @@
             <input type="submit" name="submit" value="Login">
         </form>
         <br>
+        ${error}
+        <br>
+        ${logout}
         <hr>
         ${guestcount}
     </body>
